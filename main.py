@@ -1,10 +1,19 @@
 import os
 import json
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 client = OpenAI(
     api_key=os.environ.get("GROQ_API_KEY", "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"),
