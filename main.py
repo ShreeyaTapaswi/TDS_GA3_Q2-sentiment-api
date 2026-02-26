@@ -1,13 +1,13 @@
 import os
+import json
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from openai import OpenAI
-import json
 
 app = FastAPI()
 
 client = OpenAI(
-   api_key=os.environ.get("GROQ_API_KEY"),
+    api_key=os.environ.get("GROQ_API_KEY", "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"),
     base_url="https://api.groq.com/openai/v1"
 )
 
@@ -43,7 +43,3 @@ async def analyze_comment(request: CommentRequest):
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"API error: {str(e)}")
-if __name__ == "__main__":
-    import uvicorn
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
